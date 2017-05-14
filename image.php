@@ -19,7 +19,12 @@ $descriptorspec = array(
 $cwd = NULL; // '/tmp'; Absolute path or null if the same as the current php process
 $env = array('some_option' => 'aeiou');
 
-$script = "abcm2ps - -O- | convert ps:- -trim png:-";
+$density = 77;
+if (!empty($_GET["density"])) {
+    $density = $_GET["density"];
+}
+
+$script = "abcm2ps - -O- | convert -density ". $density . " ps:- -trim png:-";
 
 $process = proc_open($script, $descriptorspec, $pipes, $cwd, $env);
 // $process = proc_open('./script.sh', $descriptorspec, $pipes);
